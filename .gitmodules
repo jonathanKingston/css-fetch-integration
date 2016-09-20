@@ -1,0 +1,3 @@
+[submodule "demo/parse-css"]
+	path = demo/parse-css
+	url = https://github.com/tabatkins/parse-css.git

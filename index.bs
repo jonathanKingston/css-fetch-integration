@@ -1,0 +1,135 @@
+<pre class='metadata'>
+Title: CSS fetch integration
+Shortname: css-uri-fetch
+Level: 1
+Status: CG-DRAFT
+Group: WICG
+Repository: WICG/css-uri-fetch
+URL: http://example.com/url-this-spec-will-live-at
+Editor: Jonathan Kingston, Mozilla https://mozilla.com, https://jonathankingston.co.uk/contact
+Abstract: This specification integrates fetch with CSS
+</pre>
+
+Introduction {#intro}
+=====================
+
+<h3 id="request-url-fetch">
+Request URL fetch integration</h3>
+
+This specification changes the behaviour type <<url>> type so that it uses the fetch API terminology.
+
+Note: this extends from the followin places https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside which defines a relationship with Fetch
+
+
+<!-- extract
+User agents must use the potentially CORS-enabled fetch method defined by the \[HTML5\] specification for all URLs in a shape-outside value. When fetching, user agents must use "Anonymous" mode, set the referrer source to the stylesheet’s URL and set the origin to the URL of the containing document. If this results in network errors such that there is no valid fallback image, the effect is as if the value none had been specified.
+-->
+
+<h2>Requesting context</h2>
+When a user agent is required to make a request to a resource it must exclusively pick from the following request contexts.
+
+<h2 id="default-url-request-setup">Default url request</h2>
+Perform the following steps:
+
+<ol>
+  <li><a>Create a potential-CORS request</a> given:
+    <ul>
+      <li>the 'url' is the location of the stylesheet or the containing document if inline</li>
+      <li>'destination' is the value of <<url>></li>
+      <li>'corsAttributeState' is the value of <<cors-setting>> from 'crossorigin()' otherwise set to ''cors''
+    </ul>
+  </li>
+  <li>Perform any request setup steps of <<url-modifier>>s in the order specified by the stylesheet author.
+</ol>
+
+<h3>Color profile context</h3>
+
+<h4>When the Color profile context applies</h4>
+The ''@color-profile'' src descriptor uses the Color profile context.
+
+Note: this adds a new row to the table in: https://fetch.spec.whatwg.org/#concept-request-initiator 
+
+<h4>Request setup</h4>
+
+<ul>
+  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Set request <a lt="concept-request-type">type</a> to ''colorprofile''
+</ul>
+
+
+<h3>Font context</h3>
+
+<h4>When the Font context applies</h4>
+This context applies when ''@font-face'' is requesting a 'url()' as per <a>Font fetching requirements</a>
+
+<h4>Request setup</h4>
+<ul>
+  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Set the request type to ''font''
+</ul>
+
+<h3>Image context</h3>
+<h4>When the Image context applies</h4>
+This context applies to any property that uses the <<image>> type and also properties including but not exclusively:
+<ul>
+  <li>'background-image' property
+  <li>'backdrop-filter' property
+  <li>'border-image' property
+  <li>'clip-path' property
+  <li>'content' property
+  <li>'cursor' property
+  <li>'filter' property
+  <li>'list-style' property
+  <li>'mask-image' property
+  <li>'shape-outside' property
+  <li>The 'image()' function
+  <li>The 'image-set()' function
+</ul>
+
+<p class="issue">
+  urls with a fragment suffer from the following issue: https://github.com/w3c/csswg-drafts/issues/383
+
+<h4>Request setup</h4>
+<ul>
+  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Set the request type to 'image'
+</ul>
+
+
+<h3>Import context</h3>
+
+<h4>When the Import context applies</h4>
+The ''@import-rule'' uses the Import Context
+
+<h4>Request setup</h4>
+<ul>
+  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Set request <a lt="concept-request-type">type</a> to ''style''
+</ul>
+
+
+<h2>URL Modifiers</h2>
+
+URL modifiers are taken into acount after the 'requesting context' steps have taken place.
+
+<h3>integrity() function</h3>
+
+<pre class="prod"><dfn id="integrity-value">&lt;integrity></dfn> = integrity( <<string>> )</pre>
+
+If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> to <<string>> of the request is set to <<string>>.
+<p class="issue">
+ Fix bikeshed to: https://www.w3.org/TR/SRI/#dfn-integrity-metadata 
+</p>
+
+<h3>crossorigin() function</h3>
+
+<pre class="prod"><dfn id="crossorigin-value">&lt;crossorigin></dfn> = crossorigin( <<cors-setting>> )</pre>
+
+<p>Where:
+<pre class="prod"><dfn id="url-value">&lt;cors-setting></dfn> = [ anonymous | use-credentials ]</pre>
+</p>
+
+If present the mode of Request is set to 'cors' and the 'credentials mode' is set to <<cors-setting>>.
+
+Follows the same table as <a lt="cors-settings-attribute">CORS settings attribute</a>
+<p class="issue">Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
