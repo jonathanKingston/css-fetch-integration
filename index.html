@@ -1425,8 +1425,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
        <a href="#image-context"><span class="secno">4.3</span> <span class="content">Image context</span></a>
        <ol class="toc">
         <li><a href="#when-the-image-context-applies"><span class="secno">4.3.1</span> <span class="content">When the Image context applies</span></a>
-        <li><a href="#response"><span class="secno">4.3.2</span> <span class="content">Response</span></a>
-        <li><a href="#request-setup1"><span class="secno">4.3.3</span> <span class="content">Request setup</span></a>
+        <li><a href="#request-setup1"><span class="secno">4.3.2</span> <span class="content">Request setup</span></a>
+        <li><a href="#response"><span class="secno">4.3.3</span> <span class="content">Response</span></a>
        </ol>
       <li>
        <a href="#import-context"><span class="secno">4.4</span> <span class="content">Import context</span></a>
@@ -1521,16 +1521,16 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li>The 'image-set()' function 
    </ul>
    <p class="issue" id="issue-a1f47537"><a class="self-link" href="#issue-a1f47537"></a> urls with a fragment suffer from the following issue: https://github.com/w3c/csswg-drafts/issues/383 </p>
-   <h4 class="heading settled" data-level="4.3.2" id="response"><span class="secno">4.3.2. </span><span class="content">Response</span><a class="self-link" href="#response"></a></h4>
+   <h4 class="heading settled" data-level="4.3.2" id="request-setup1"><span class="secno">4.3.2. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup1"></a></h4>
+   <ul>
+    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <span class="css">image</span> 
+    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
+   </ul>
+   <h4 class="heading settled" data-level="4.3.3" id="response"><span class="secno">4.3.3. </span><span class="content">Response</span><a class="self-link" href="#response"></a></h4>
    <ul>
     <li>If the response is of an error type the property should consider the value of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> to be an <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#invalid-image">invalid image</a> 
     <li>If the image isn’t able to be displayed by the UA then it should be considered a <a data-link-type="dfn" href="https://drafts.csswg.org/css-images-3/#invalid-image">invalid image</a> 
     <li>If the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> specifies an image fragment the response body will be clipped per the algorithm specified in <a data-link-type="dfn">image fragments</a>. 
-   </ul>
-   <h4 class="heading settled" data-level="4.3.3" id="request-setup1"><span class="secno">4.3.3. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup1"></a></h4>
-   <ul>
-    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <span class="css">image</span> 
-    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
    </ul>
    <h3 class="heading settled" data-level="4.4" id="import-context"><span class="secno">4.4. </span><span class="content">Import context</span><a class="self-link" href="#import-context"></a></h3>
    <h4 class="heading settled" data-level="4.4.1" id="when-the-import-context-applies"><span class="secno">4.4.1. </span><span class="content">When the Import context applies</span><a class="self-link" href="#when-the-import-context-applies"></a></h4>

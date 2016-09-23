@@ -107,17 +107,17 @@ This context applies to any property that uses the <<image>> type and also prope
 <p class="issue">
   urls with a fragment suffer from the following issue: https://github.com/w3c/csswg-drafts/issues/383
 
+<h4>Request setup</h4>
+<ul>
+  <li>Let 'destination-type' be ''image''
+  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
+</ul>
+
 <h4>Response</h4>
 <ul>
   <li>If the response is of an error type the property should consider the value of <<url>> to be an <a>invalid image</a> <!-- follows https://drafts.csswg.org/css-images-3/#image-fallbacks -->
   <li>If the image isn't able to be displayed by the UA then it should be considered a <a>invalid image</a>
   <li>If the <<url>> specifies an image fragment the response body will be clipped per the algorithm specified in <a>image fragments</a>.<!-- https://drafts.csswg.org/css-images-3/#image-fragments -->
-</ul>
-
-<h4>Request setup</h4>
-<ul>
-  <li>Let 'destination-type' be ''image''
-  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
 </ul>
 
 
