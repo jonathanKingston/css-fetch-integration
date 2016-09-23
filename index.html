@@ -1407,7 +1407,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     <li><a href="#requesting-context"><span class="secno">2</span> <span class="content">Requesting context</span></a>
     <li><a href="#embedding-context"><span class="secno">3</span> <span class="content">'Embedding context'</span></a>
     <li>
-     <a href="#default-url-request-setup"><span class="secno">4</span> <span class="content">Default url request</span></a>
+     <a href="#default-url-request-setup"><span class="secno">4</span> <span class="content">Default url request setup</span></a>
      <ol class="toc">
       <li>
        <a href="#color-profile-context"><span class="secno">4.1</span> <span class="content">Color profile context</span></a>
@@ -1467,22 +1467,22 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
     When a user agent is required to make a request to a resource using <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> it must exclusively pick from one of the request contexts. This document doesn’t cover the usage of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> to reference elements within the same document. 
    <h2 class="heading settled" data-level="3" id="embedding-context"><span class="secno">3. </span><span class="content">'Embedding context'</span><a class="self-link" href="#embedding-context"></a></h2>
    <p>The embedding context is the stylesheet or the containing document if the styles are loaded within a document.</p>
-   <h2 class="heading settled" data-level="4" id="default-url-request-setup"><span class="secno">4. </span><span class="content">Default url request</span><a class="self-link" href="#default-url-request-setup"></a></h2>
+   <h2 class="heading settled" data-level="4" id="default-url-request-setup"><span class="secno">4. </span><span class="content">Default url request setup</span><a class="self-link" href="#default-url-request-setup"></a></h2>
     Perform the following steps: 
    <ol>
+    <li>Perform steps in any specified URL modifiers. 
     <li>
      <a data-link-type="dfn">Create a potential-CORS request</a> given: 
      <ul>
       <li>The <a class="property" data-link-type="propdesc">url</a> is the resulting absolute value of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a>
-      <li><a class="property" data-link-type="propdesc">destination</a> is the value of <a class="property" data-link-type="propdesc">destinationType</a>
-      <li><a class="property" data-link-type="propdesc">corsAttributeState</a> is the value of <a class="production css" data-link-type="type" href="#url-value" id="ref-for-url-value-1">&lt;cors-setting></a> from 'crossorigin()' otherwise set to <span class="css">cors</span> 
-      <li><a class="property" data-link-type="propdesc">corsAttributeState</a> is <span class="css">Anonymous</span>. 
+      <li><a class="property" data-link-type="propdesc">destination</a> is the value of <a class="property" data-link-type="propdesc">destination-type</a>
+      <li><a class="property" data-link-type="propdesc">corsAttributeState</a> is the value of <a class="property" data-link-type="propdesc">request-cors-setting</a> 
      </ul>
     <li>Let <a class="property" data-link-type="propdesc">host</a> be the domain of the containing document. 
     <li>Optionally the UA can choose to let <a class="property" data-link-type="propdesc">origin</a> be the origin of the containing document. 
     <li>Let <a class="property" data-link-type="propdesc">referrer</a> be the URL of the 'embedding context'. 
     <li>Let 'referrer policy' be the policy of the 'embedding context'. 
-    <li>Perform any request setup steps of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-4/#typedef-url-modifier">&lt;url-modifier></a>s in the order specified by the stylesheet author. 
+    <li>If present set <a data-link-type="dfn">integrity metadata</a> of the request to <a class="property" data-link-type="propdesc">request-integrity-metadata</a>. 
    </ol>
    <div class="issue" id="issue-ecab2524"><a class="self-link" href="#issue-ecab2524"></a> Chrome implements setting the origin however other UA’s such as Firefox don’t. </div>
    <div class="issue" id="issue-7aa5b368"><a class="self-link" href="#issue-7aa5b368"></a> The 'referrer policy' currently isn’t observed in UA implementations. </div>
@@ -1492,16 +1492,16 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <p class="note" role="note">Note: this adds a new row to the table in: https://fetch.spec.whatwg.org/#concept-request-initiator</p>
    <h4 class="heading settled" data-level="4.1.2" id="request-setup"><span class="secno">4.1.2. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup"></a></h4>
    <ul>
-    <li>Let <a class="property" data-link-type="propdesc">destinationType</a> be <span class="css">colorprofile</span> 
-    <li>Get the result of <a href="#default-url-request-setup">default url request</a> 
+    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <span class="css">colorprofile</span> 
+    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
    </ul>
    <h3 class="heading settled" data-level="4.2" id="font-context"><span class="secno">4.2. </span><span class="content">Font context</span><a class="self-link" href="#font-context"></a></h3>
    <h4 class="heading settled" data-level="4.2.1" id="when-the-font-context-applies"><span class="secno">4.2.1. </span><span class="content">When the Font context applies</span><a class="self-link" href="#when-the-font-context-applies"></a></h4>
     This context applies when <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-fonts-3/#at-font-face-rule">@font-face</a> is requesting a 'url()' as per <a data-link-type="dfn">Font fetching requirements</a> 
    <h4 class="heading settled" data-level="4.2.2" id="request-setup0"><span class="secno">4.2.2. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup0"></a></h4>
    <ul>
-    <li>Let <a class="property" data-link-type="propdesc">destinationType</a> be <span class="css">font</span> 
-    <li>Get the result of <a href="#default-url-request-setup">default url request</a> 
+    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <span class="css">font</span> 
+    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
    </ul>
    <h3 class="heading settled" data-level="4.3" id="image-context"><span class="secno">4.3. </span><span class="content">Image context</span><a class="self-link" href="#image-context"></a></h3>
    <h4 class="heading settled" data-level="4.3.1" id="when-the-image-context-applies"><span class="secno">4.3.1. </span><span class="content">When the Image context applies</span><a class="self-link" href="#when-the-image-context-applies"></a></h4>
@@ -1529,43 +1529,39 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    </ul>
    <h4 class="heading settled" data-level="4.3.3" id="request-setup1"><span class="secno">4.3.3. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup1"></a></h4>
    <ul>
-    <li>Let <a class="property" data-link-type="propdesc">destinationType</a> be <span class="css">image</span> 
-    <li>Get the result of <a href="#default-url-request-setup">default url request</a> 
+    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <span class="css">image</span> 
+    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
    </ul>
    <h3 class="heading settled" data-level="4.4" id="import-context"><span class="secno">4.4. </span><span class="content">Import context</span><a class="self-link" href="#import-context"></a></h3>
    <h4 class="heading settled" data-level="4.4.1" id="when-the-import-context-applies"><span class="secno">4.4.1. </span><span class="content">When the Import context applies</span><a class="self-link" href="#when-the-import-context-applies"></a></h4>
     The <span class="css">@import-rule</span> uses the Import Context 
    <h4 class="heading settled" data-level="4.4.2" id="request-setup2"><span class="secno">4.4.2. </span><span class="content">Request setup</span><a class="self-link" href="#request-setup2"></a></h4>
    <ul>
-    <li>Let <a class="property" data-link-type="propdesc">destinationType</a> be <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-containment-3/#valdef-contain-style">style</a> 
-    <li>Get the result of <a href="#default-url-request-setup">default url request</a> 
+    <li>Let <a class="property" data-link-type="propdesc">destination-type</a> be <a class="css" data-link-type="maybe" href="https://drafts.csswg.org/css-containment-3/#valdef-contain-style">style</a> 
+    <li>Get the result of <a href="#default-url-request-setup">default url request setup</a> 
    </ul>
    <h2 class="heading settled" data-level="5" id="url-modifiers"><span class="secno">5. </span><span class="content">URL Modifiers</span><a class="self-link" href="#url-modifiers"></a></h2>
    <p>URL modifiers are taken into acount after the 'requesting context' steps have taken place.</p>
    <h3 class="heading settled" data-level="5.1" id="integrity-function"><span class="secno">5.1. </span><span class="content">integrity() function</span><a class="self-link" href="#integrity-function"></a></h3>
 <pre class="prod">integrity( <a data-link-type="type"><a class="production" data-link-type="type">&lt;integrity-metadata></a></a> )</pre>
-   <p>If present set <a data-link-type="dfn">integrity metadata</a> of the request to <a class="property" data-link-type="propdesc">integrity-metadata</a></p>
+   <p>If present set <a class="property" data-link-type="propdesc">request-integrity-metadata</a> to <a class="production css" data-link-type="type">&lt;integrity-metadata></a>.</p>
    <p class="issue" id="issue-211e6b62"><a class="self-link" href="#issue-211e6b62"></a> Fix bikeshed to: https://www.w3.org/TR/SRI/#dfn-integrity-metadata </p>
    <h3 class="heading settled" data-level="5.2" id="crossorigin-function"><span class="secno">5.2. </span><span class="content">crossorigin() function</span><a class="self-link" href="#crossorigin-function"></a></h3>
-<pre class="prod"><dfn data-dfn-type="type" data-export="" id="crossorigin-value">&lt;crossorigin><a class="self-link" href="#crossorigin-value"></a></dfn> = crossorigin( <a class="production" data-link-type="type" href="#url-value" id="ref-for-url-value-2">&lt;cors-setting></a> )</pre>
+<pre class="prod"><dfn data-dfn-type="type" data-export="" id="crossorigin-value">&lt;crossorigin><a class="self-link" href="#crossorigin-value"></a></dfn> = crossorigin( <a class="production" data-link-type="type" href="#url-value" id="ref-for-url-value-1">&lt;cors-setting></a> )</pre>
    <p>Where: </p>
 <pre class="prod"><dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="url-value">&lt;cors-setting></dfn> = [ anonymous <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> use-credentials ]</pre>
    <p></p>
-   <p>If present the mode of Request is set to <a class="property" data-link-type="propdesc">cors</a> and the 'credentials mode' is set to <a class="production css" data-link-type="type" href="#url-value" id="ref-for-url-value-3">&lt;cors-setting></a>.</p>
-   <p>Follows the same table as <a data-link-type="dfn">CORS settings attribute</a></p>
+   <p>If present set <a class="property" data-link-type="propdesc">request-cors-setting</a> to the <a class="property" data-link-type="propdesc">State</a> column matching <a class="production css" data-link-type="type" href="#url-value" id="ref-for-url-value-2">&lt;cors-setting></a> in the <a data-link-type="dfn">CORS settings attribute</a> table.</p>
    <p class="issue" id="issue-8fed1ebd"><a class="self-link" href="#issue-8fed1ebd"></a>Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
-   <div class="example" id="example-cf864cec">
-    <a class="self-link" href="#example-cf864cec"></a> The following is an example to show the integrity matching of a border image: 
+   <div class="example" id="example-7036f63d">
+    <a class="self-link" href="#example-7036f63d"></a> The following is an example to show the integrity matching of a border image: 
 <pre>border-image: url('example.png'
     integrity(sha384-dOTZf16X8p34q2/kYyEFm0jh89uTjikhnzjeLeF0FHsEaYKb1A1cv+Lyv4Hk8vHd
       sha512-Q2bFTOhEALkN8hOms2FKTDLy7eugP2zFZ1T8LCvX42Fp3WoNr3bjZSAHeOsHrbV1Fu9/A0EzCinRE7Af1ofPrw==)
     crossorigin(anonymous)
   ) 30 round;
 </pre>
-    <p>The following example shows the use of </p>
-    <p>custom properties</p>
-     to improve readability.
-    <p></p>
+    <p>The following example shows the use of <a data-link-type="dfn" href="https://drafts.csswg.org/css-variables-1/#custom-property">custom properties</a> to improve readability.</p>
 <pre>.selector {
   --image-sha384: sha384-dOTZf16X8p34q2/kYyEFm0jh89uTjikhnzjeLeF0FHsEaYKb1A1cv+Lyv4Hk8vHd;
   --image-sha512: sha512-Q2bFTOhEALkN8hOms2FKTDLy7eugP2zFZ1T8LCvX42Fp3WoNr3bjZSAHeOsHrbV1Fu9/A0EzCinRE7Af1ofPrw==;
@@ -1789,8 +1785,12 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <li>
     <a data-link-type="biblio">[css-values]</a> defines the following terms:
     <ul>
-     <li><a href="https://drafts.csswg.org/css-values-4/#typedef-url-modifier">&lt;url-modifier></a>
      <li><a href="https://drafts.csswg.org/css-values-4/#comb-one">|</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[css-variables-1]</a> defines the following terms:
+    <ul>
+     <li><a href="https://drafts.csswg.org/css-variables-1/#custom-property">custom property</a>
     </ul>
    <li>
     <a data-link-type="biblio">[CSS2]</a> defines the following terms:
@@ -1842,6 +1842,8 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
+   <dt id="biblio-css-variables-1">[CSS-VARIABLES-1]
+   <dd>Tab Atkins Jr.. <a href="http://dev.w3.org/csswg/css-variables/">CSS Custom Properties for Cascading Variables Module Level 1</a>. 3 December 2015. CR. URL: <a href="http://dev.w3.org/csswg/css-variables/">http://dev.w3.org/csswg/css-variables/</a>
    <dt id="biblio-css2">[CSS2]
    <dd>Bert Bos; et al. <a href="https://www.w3.org/TR/CSS2">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a>. 7 June 2011. REC. URL: <a href="https://www.w3.org/TR/CSS2">https://www.w3.org/TR/CSS2</a>
   </dl>
@@ -1856,8 +1858,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
   <aside class="dfn-panel" data-for="url-value">
    <b><a href="#url-value">#url-value</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-url-value-1">4. Default url request</a>
-    <li><a href="#ref-for-url-value-2">5.2. crossorigin() function</a> <a href="#ref-for-url-value-3">(2)</a>
+    <li><a href="#ref-for-url-value-1">5.2. crossorigin() function</a> <a href="#ref-for-url-value-2">(2)</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

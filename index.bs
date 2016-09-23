@@ -34,23 +34,23 @@ When a user agent is required to make a request to a resource using <<url>> it m
 
 The embedding context is the stylesheet or the containing document if the styles are loaded within a document.
 
-<h2 id="default-url-request-setup">Default url request</h2>
+<h2 id="default-url-request-setup">Default url request setup</h2>
 Perform the following steps:
 
 <ol>
+  <li>Perform steps in any specified URL modifiers.
   <li><a>Create a potential-CORS request</a> given:
     <ul>
       <li>The 'url' is the resulting absolute value of <<url>></li>
-      <li>'destination' is the value of 'destinationType'</li>
-      <li>'corsAttributeState' is the value of <<cors-setting>> from 'crossorigin()' otherwise set to ''cors''
-      <li>'corsAttributeState' is ''Anonymous''.
+      <li>'destination' is the value of 'destination-type'</li>
+      <li>'corsAttributeState' is the value of 'request-cors-setting'
     </ul>
   </li>
   <li>Let 'host' be the domain of the containing document.
   <li>Optionally the UA can choose to let 'origin' be the origin of the containing document.
   <li>Let 'referrer' be the URL of the 'embedding context'.
   <li>Let 'referrer policy' be the policy of the 'embedding context'.
-  <li>Perform any request setup steps of <<url-modifier>>s in the order specified by the stylesheet author.
+  <li>If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> of the request to 'request-integrity-metadata'.
 </ol>
 
 <div class="issue">
@@ -70,8 +70,8 @@ Note: this adds a new row to the table in: https://fetch.spec.whatwg.org/#concep
 <h4>Request setup</h4>
 
 <ul>
-  <li>Let 'destinationType' be ''colorprofile''
-  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Let 'destination-type' be ''colorprofile''
+  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
 </ul>
 
 
@@ -82,8 +82,8 @@ This context applies when ''@font-face'' is requesting a 'url()' as per <a>Font 
 
 <h4>Request setup</h4>
 <ul>
-  <li>Let 'destinationType' be ''font''
-  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Let 'destination-type' be ''font''
+  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
 </ul>
 
 <h3>Image context</h3>
@@ -116,8 +116,8 @@ This context applies to any property that uses the <<image>> type and also prope
 
 <h4>Request setup</h4>
 <ul>
-  <li>Let 'destinationType' be ''image''
-  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Let 'destination-type' be ''image''
+  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
 </ul>
 
 
@@ -128,8 +128,8 @@ The ''@import-rule'' uses the Import Context
 
 <h4>Request setup</h4>
 <ul>
-  <li>Let 'destinationType' be ''style''
-  <li>Get the result of <a href="#default-url-request-setup">default url request</a>
+  <li>Let 'destination-type' be ''style''
+  <li>Get the result of <a href="#default-url-request-setup">default url request setup</a>
 </ul>
 
 
@@ -141,7 +141,7 @@ URL modifiers are taken into acount after the 'requesting context' steps have ta
 
 <pre class="prod">integrity( <a><<integrity-metadata>></a> )</pre><!-- this requires: https://github.com/jonathanKingston/bikeshed/tree/jk/bug/819 -->
 
-If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> of the request to 'integrity-metadata'
+If present set 'request-integrity-metadata' to <<integrity-metadata>>.
 <p class="issue">
  Fix bikeshed to: https://www.w3.org/TR/SRI/#dfn-integrity-metadata 
 </p>
@@ -154,9 +154,8 @@ If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> of the req
 <pre class="prod"><dfn id="url-value">&lt;cors-setting></dfn> = [ anonymous | use-credentials ]</pre>
 </p>
 
-If present the mode of Request is set to 'cors' and the 'credentials mode' is set to <<cors-setting>>.
+If present set 'request-cors-setting' to the 'State' column matching <<cors-setting>> in the <a lt="cors-settings-attribute">CORS settings attribute</a> table.
 
-Follows the same table as <a lt="cors-settings-attribute">CORS settings attribute</a>
 <p class="issue">Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
 
 
@@ -171,7 +170,7 @@ Follows the same table as <a lt="cors-settings-attribute">CORS settings attribut
     ) 30 round;
   </pre>
 
-  The following example shows the use of <p>custom properties</p> to improve readability.
+  The following example shows the use of <a>custom properties</a> to improve readability.
   <pre>
   .selector {
     --image-sha384: sha384-dOTZf16X8p34q2/kYyEFm0jh89uTjikhnzjeLeF0FHsEaYKb1A1cv+Lyv4Hk8vHd;
