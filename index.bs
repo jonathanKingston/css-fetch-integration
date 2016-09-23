@@ -18,6 +18,8 @@ Request URL fetch integration</h3>
 
 This specification changes the behaviour type <<url>> type so that it uses the fetch API terminology.
 
+Note: Older specifications may reference the <<uri>> type, these should be considered to be using the <<image>> type.
+
 Note: this extends from the followin places https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside which defines a relationship with Fetch
 
 
@@ -26,7 +28,11 @@ User agents must use the potentially CORS-enabled fetch method defined by the \[
 -->
 
 <h2>Requesting context</h2>
-When a user agent is required to make a request to a resource it must exclusively pick from the following request contexts.
+When a user agent is required to make a request to a resource using <<uri>> it must exclusively pick from one of the request contexts. This document doesn't cover the usage of <<url>> to reference elements within the same document.
+
+<h2>'Embedding context'</h2>
+
+The embedding context is the stylesheet or the containing document if the styles are loaded within a document.
 
 <h2 id="default-url-request-setup">Default url request</h2>
 Perform the following steps:
@@ -34,13 +40,25 @@ Perform the following steps:
 <ol>
   <li><a>Create a potential-CORS request</a> given:
     <ul>
-      <li>the 'url' is the location of the stylesheet or the containing document if inline</li>
-      <li>'destination' is the value of <<url>></li>
+      <li>The 'url' is the resulting absolute value of <<url>></li>
+      <li>'destination' is the value of 'destinationType'</li>
       <li>'corsAttributeState' is the value of <<cors-setting>> from 'crossorigin()' otherwise set to ''cors''
+      <li>'corsAttributeState' is ''Anonymous''.
     </ul>
   </li>
+  <li>Let 'host' be the domain of the containing document.
+  <li>Optionally the UA can choose to let 'origin' be the origin of the containing document.
+  <li>Let 'referrer' be the URL of the 'embedding context'.
+  <li>Let 'referrer policy' be the policy of the 'embedding context'.
   <li>Perform any request setup steps of <<url-modifier>>s in the order specified by the stylesheet author.
 </ol>
+
+<div class="issue">
+  Chrome implements setting the origin however other UA's such as Firefox don't.
+</div>
+<div class="issue">
+  The 'referrer policy' currently isn't observed in UA implementations.
+</div>
 
 <h3>Color profile context</h3>
 
@@ -52,8 +70,8 @@ Note: this adds a new row to the table in: https://fetch.spec.whatwg.org/#concep
 <h4>Request setup</h4>
 
 <ul>
+  <li>Let 'destinationType' be ''colorprofile''
   <li>Get the result of <a href="#default-url-request-setup">default url request</a>
-  <li>Set request <a lt="concept-request-type">type</a> to ''colorprofile''
 </ul>
 
 
@@ -64,8 +82,8 @@ This context applies when ''@font-face'' is requesting a 'url()' as per <a>Font 
 
 <h4>Request setup</h4>
 <ul>
+  <li>Let 'destinationType' be ''font''
   <li>Get the result of <a href="#default-url-request-setup">default url request</a>
-  <li>Set the request type to ''font''
 </ul>
 
 <h3>Image context</h3>
@@ -89,10 +107,17 @@ This context applies to any property that uses the <<image>> type and also prope
 <p class="issue">
   urls with a fragment suffer from the following issue: https://github.com/w3c/csswg-drafts/issues/383
 
+<h4>Response</h4>
+<ul>
+  <li>If the response is of an error type the property should consider the value of <<url>> to be an <a>invalid image</a> <!-- follows https://drafts.csswg.org/css-images-3/#image-fallbacks -->
+  <li>If the image isn't able to be displayed by the UA then it should be considered a <a>invalid image</a>
+  <li>If the <<url>> specifies an image fragment the response body will be clipped per the algorithm specified in <a>image fragments</a>.<!-- https://drafts.csswg.org/css-images-3/#image-fragments -->
+</ul>
+
 <h4>Request setup</h4>
 <ul>
+  <li>Let 'destinationType' be ''image''
   <li>Get the result of <a href="#default-url-request-setup">default url request</a>
-  <li>Set the request type to 'image'
 </ul>
 
 
@@ -103,8 +128,8 @@ The ''@import-rule'' uses the Import Context
 
 <h4>Request setup</h4>
 <ul>
+  <li>Let 'destinationType' be ''style''
   <li>Get the result of <a href="#default-url-request-setup">default url request</a>
-  <li>Set request <a lt="concept-request-type">type</a> to ''style''
 </ul>
 
 
@@ -114,9 +139,9 @@ URL modifiers are taken into acount after the 'requesting context' steps have ta
 
 <h3>integrity() function</h3>
 
-<pre class="prod"><dfn id="integrity-value">&lt;integrity></dfn> = integrity( <<string>> )</pre>
+<pre class="prod">integrity( <a><<integrity-metadata>></a> )</pre><!-- this requires: https://github.com/jonathanKingston/bikeshed/tree/jk/bug/819 -->
 
-If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> to <<string>> of the request is set to <<string>>.
+If present set <a lt="#dfn-integrity-metadata">integrity metadata</a> of the request to 'integrity-metadata'
 <p class="issue">
  Fix bikeshed to: https://www.w3.org/TR/SRI/#dfn-integrity-metadata 
 </p>
@@ -133,3 +158,25 @@ If present the mode of Request is set to 'cors' and the 'credentials mode' is se
 
 Follows the same table as <a lt="cors-settings-attribute">CORS settings attribute</a>
 <p class="issue">Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
+
+
+<div class="example">
+  The following is an example to show the integrity matching of a border image:
+
+  <pre>
+  border-image: url('example.png'
+      integrity(sha384-dOTZf16X8p34q2/kYyEFm0jh89uTjikhnzjeLeF0FHsEaYKb1A1cv+Lyv4Hk8vHd
+        sha512-Q2bFTOhEALkN8hOms2FKTDLy7eugP2zFZ1T8LCvX42Fp3WoNr3bjZSAHeOsHrbV1Fu9/A0EzCinRE7Af1ofPrw==)
+      crossorigin(anonymous)
+    ) 30 round;
+  </pre>
+
+  The following example shows the use of <p>custom properties</p> to improve readability.
+  <pre>
+  .selector {
+    --image-sha384: sha384-dOTZf16X8p34q2/kYyEFm0jh89uTjikhnzjeLeF0FHsEaYKb1A1cv+Lyv4Hk8vHd;
+    --image-sha512: sha512-Q2bFTOhEALkN8hOms2FKTDLy7eugP2zFZ1T8LCvX42Fp3WoNr3bjZSAHeOsHrbV1Fu9/A0EzCinRE7Af1ofPrw==;
+    border-image: url('example.png' integrity(var(--image-sha384) var(--image-sha512)) crossorigin(anonymous)) 30 round;
+  }
+  </pre>
+</div>
