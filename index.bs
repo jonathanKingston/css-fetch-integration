@@ -16,9 +16,9 @@ Introduction {#intro}
 <h3 id="request-url-fetch">
 Request URL fetch integration</h3>
 
-This specification changes the behaviour type <<url>> type so that it uses the fetch API terminology.
+This specification changes the behaviour type <<url>> so that it uses the fetch API terminology.
 
-Note: Older specifications may reference the <<uri>> type, these should be considered to be using the <<image>> type.
+Note: Older specifications may reference the <<uri>> type, these should be considered to be using the <<url>> type.
 
 Note: this extends from the followin places https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside which defines a relationship with Fetch
 
@@ -28,7 +28,7 @@ User agents must use the potentially CORS-enabled fetch method defined by the \[
 -->
 
 <h2>Requesting context</h2>
-When a user agent is required to make a request to a resource using <<uri>> it must exclusively pick from one of the request contexts. This document doesn't cover the usage of <<url>> to reference elements within the same document.
+When a user agent is required to make a request to a resource using <<url>> it must exclusively pick from one of the request contexts. This document doesn't cover the usage of <<url>> to reference elements within the same document.
 
 <h2>'Embedding context'</h2>
 
