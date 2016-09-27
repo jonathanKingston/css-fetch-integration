@@ -1363,7 +1363,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">CSS fetch integration</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2016-09-23">23 September 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Draft Community Group Report, <time class="dt-updated" datetime="2016-09-27">27 September 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1462,7 +1462,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <h3 class="heading settled" data-level="1.1" id="request-url-fetch"><span class="secno">1.1. </span><span class="content"> Request URL fetch integration</span><a class="self-link" href="#request-url-fetch"></a></h3>
    <p>This specification changes the behaviour type <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> so that it uses the fetch API terminology.</p>
    <p class="note" role="note">Note: Older specifications may reference the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css21/syndata.html#value-def-uri">&lt;uri></a> type, these should be considered to be using the <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> type.</p>
-   <p class="note" role="note">Note: this extends from the followin places https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside which defines a relationship with Fetch</p>
+   <p class="note" role="note">Note: This extends from the following places: https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside wich define a relationship with Fetch</p>
    <h2 class="heading settled" data-level="2" id="requesting-context"><span class="secno">2. </span><span class="content">Requesting context</span><a class="self-link" href="#requesting-context"></a></h2>
     When a user agent is required to make a request to a resource using <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> it must exclusively pick from one of the request contexts. This document doesn’t cover the usage of <a class="production css" data-link-type="type" href="https://drafts.csswg.org/css-values-3/#url-value">&lt;url></a> to reference elements within the same document. 
    <h2 class="heading settled" data-level="3" id="embedding-context"><span class="secno">3. </span><span class="content">'Embedding context'</span><a class="self-link" href="#embedding-context"></a></h2>
@@ -1551,7 +1551,7 @@ A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/
    <p>Where: </p>
 <pre class="prod"><dfn class="dfn-paneled" data-dfn-type="type" data-export="" id="url-value">&lt;cors-setting></dfn> = [ anonymous <a data-link-type="grammar" href="https://drafts.csswg.org/css-values-4/#comb-one">|</a> use-credentials ]</pre>
    <p></p>
-   <p>If present set <a class="property" data-link-type="propdesc">request-cors-setting</a> to the <a class="property" data-link-type="propdesc">State</a> column matching <a class="production css" data-link-type="type" href="#url-value" id="ref-for-url-value-2">&lt;cors-setting></a> in the <a data-link-type="dfn">CORS settings attribute</a> table.</p>
+   <p>If present set 'HTML/infrastructure#request-cors-setting' to the <a class="property" data-link-type="propdesc">State</a> column matching <a class="production css" data-link-type="type" href="#url-value" id="ref-for-url-value-2">&lt;cors-setting></a> in the <a data-link-type="dfn">CORS settings attribute</a> table.</p>
    <p class="issue" id="issue-8fed1ebd"><a class="self-link" href="#issue-8fed1ebd"></a>Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
    <div class="example" id="example-7036f63d">
     <a class="self-link" href="#example-7036f63d"></a> The following is an example to show the integrity matching of a border image: 

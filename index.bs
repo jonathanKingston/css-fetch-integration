@@ -20,7 +20,7 @@ This specification changes the behaviour type <<url>> so that it uses the fetch 
 
 Note: Older specifications may reference the <<uri>> type, these should be considered to be using the <<url>> type.
 
-Note: this extends from the followin places https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside which defines a relationship with Fetch
+Note: This extends from the following places: https://drafts.csswg.org/css-values/#urls, https://drafts.csswg.org/css-values-3/#urls and https://drafts.csswg.org/css-shapes/#propdef-shape-outside wich define a relationship with Fetch
 
 
 <!-- extract
@@ -154,7 +154,7 @@ If present set 'request-integrity-metadata' to <<integrity-metadata>>.
 <pre class="prod"><dfn id="url-value">&lt;cors-setting></dfn> = [ anonymous | use-credentials ]</pre>
 </p>
 
-If present set 'request-cors-setting' to the 'State' column matching <<cors-setting>> in the <a lt="cors-settings-attribute">CORS settings attribute</a> table.
+If present set 'HTML/infrastructure#request-cors-setting' to the 'State' column matching <<cors-setting>> in the <a lt="cors-settings-attribute">CORS settings attribute</a> table.
 
 <p class="issue">Fix bikeshed to: https://html.spec.whatwg.org/multipage/infrastructure.html#cors-settings-attribute</p>
 
