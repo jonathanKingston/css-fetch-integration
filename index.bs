@@ -4,8 +4,8 @@ Shortname: css-uri-fetch
 Level: 1
 Status: CG-DRAFT
 Group: WICG
-Repository: WICG/css-uri-fetch
-URL: http://example.com/url-this-spec-will-live-at
+Repository: jonathanKingston/css-fetch-integration
+URL: https://jonathankingston.github.io/css-fetch-integration
 Editor: Jonathan Kingston, Mozilla https://mozilla.com, https://jonathankingston.co.uk/contact
 Abstract: This specification integrates fetch with CSS
 </pre>
